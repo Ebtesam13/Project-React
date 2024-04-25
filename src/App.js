@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {BrowserRouter , Routes , Route} from 'react-router-dom';
+import SignIn from './Components/SignIn';
+import SignUp from './Components/SignUp';
+import Home from "./Pages/Home";
+import Cart from "./Pages/Cart";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import NavbarComponent from "./Components/Navbar";
+
+const App = () =>{
+  const LoggedIn = JSON.parse(localStorage.getItem('LoggedIn'));
+
+  return(
+    <>
+        <NavbarComponent/>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/SignUp" element={<SignUp/>}/>
+            <Route path="/SignIn" element={<SignIn/>}/>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/Cart" element={<Cart isLoggedIn={LoggedIn} />} /> 
+            <Route path="/SignIn" component={SignIn} />
+
+
+          </Routes>
+        </BrowserRouter>
+    </>
+  )
 }
 
 export default App;
