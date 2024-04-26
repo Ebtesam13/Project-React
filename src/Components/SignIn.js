@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Container, Card, Form, Button } from 'react-bootstrap';
+import { Container, Card, Form, Button, FormGroup, FormCheck } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
-
-const navigate = useNavigate();
-const [input, setInput] = useState({
+  const navigate = useNavigate();
+  const [input, setInput] = useState({
     email: '',
-    password: ''
+    password: '',
+    rememberMe: false,
   });
   const [errors, setErrors] = useState({});
 
@@ -29,22 +29,42 @@ const [input, setInput] = useState({
     return isValid;
   };
 
+  const handleLogin = (user) => {
+    localStorage.setItem('LoggedIn', JSON.stringify(true));
+    localStorage.setItem('UserId', JSON.stringify(user.id));
+    if (input.rememberMe) {
+      localStorage.setItem('RememberMe', JSON.stringify(true));
+    } else {
+      localStorage.removeItem('RememberMe');
+    }
+    alert('Login successful');
+    navigate('/');
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const userData = JSON.parse(localStorage.getItem('user'));
-      if (userData && input.email === userData.email && input.password === userData.password) {
-        localStorage.setItem('LoggedIn', JSON.stringify(true));
-        alert('Login successful'); 
-        navigate('/'); 
+      const userEmail = input.email.trim().toLowerCase(); // Ensure lowercase and no spaces
+      const userPassword = input.password.trim(); // Ensure no spaces
+      console.log('User email:', userEmail);
+      console.log('User password:', userPassword);
+  
+      const usersData = JSON.parse(localStorage.getItem('users')) || []; // Parse the array of objects
+      console.log('Stored users data:', usersData);
+  
+      const foundUser = usersData.find((user) => user.email === userEmail && user.password === userPassword);
+      console.log('Found user:', foundUser);
+  
+      if (foundUser) {
+        handleLogin(foundUser); // Pass the foundUser object to handleLogin function
       } else {
         navigate('/SignIn');
-        alert('Invalid email or password'); 
+        alert('Invalid email or password');
       }
     }
   };
   
-
+  
   return (
     <Container fluid className='d-flex align-items-center justify-content-center bg-image'>
       <div className='mask gradient-custom-3'></div>
@@ -76,8 +96,24 @@ const [input, setInput] = useState({
               />
               {errors.password && <p className="text-danger">{errors.password}</p>}
             </Form.Group>
-            <Button type='submit' className='mb-4 w-100 gradient-custom-4' size='lg'>Log in</Button>
-            <p className="text-center mb-0">Don't have an account? <a href="./SignUp">Sign Up</a></p>
+
+            <FormGroup className='mb-4'>
+              <FormCheck
+                type='checkbox'
+                label='Remember Me'
+                checked={input.rememberMe}
+                onChange={(e) => setInput({ ...input, rememberMe: e.target.checked })}
+              />
+            </FormGroup>
+
+            <Button type='submit' className='mb-4 w-100 gradient-custom-4' size='lg'>
+              Log in
+            </Button>
+
+            {/* Sign Up link */}
+            <p className="text-center mb-0">
+              Don't have an account? <a href="./SignUp">Sign Up</a>
+            </p>
           </Form>
         </Card.Body>
       </Card>

@@ -1,4 +1,4 @@
-import React from "react";
+import React  from "react";
 import {BrowserRouter , Routes , Route} from 'react-router-dom';
 import SignIn from './Components/SignIn';
 import SignUp from './Components/SignUp';
@@ -10,14 +10,20 @@ import NavbarComponent from "./Components/Navbar";
 const App = () =>{
   const LoggedIn = JSON.parse(localStorage.getItem('LoggedIn'));
 
+ 
+
+  const handleClickAddCart = (product)=>{
+    console.log(product)
+  }
+
   return(
     <>
-        <NavbarComponent/>
+        <NavbarComponent />
         <BrowserRouter>
           <Routes>
             <Route path="/SignUp" element={<SignUp/>}/>
             <Route path="/SignIn" element={<SignIn/>}/>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<Home/>} handleClickAddCart ={handleClickAddCart}/>
             <Route path="/Cart" element={<Cart isLoggedIn={LoggedIn} />} /> 
             <Route path="/SignIn" component={SignIn} />
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Card, Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'; 
-import './SignUp.css';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -11,7 +10,6 @@ function SignUp() {
     password: ''
   });
   const [errors, setErrors] = useState({});
-  const [agreeTerms, setAgreeTerms] = useState(false); 
 
   const validateForm = () => {
     let errors = {};
@@ -28,6 +26,13 @@ function SignUp() {
     } else if (!/\S+@\S+\.\S+/.test(input.email)) {
       errors.email = 'Email is invalid';
       isValid = false;
+    } else {
+      const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+      const foundUser = existingUsers.find(user => user.email === input.email);
+      if (foundUser) {
+        errors.email = 'Email is already taken';
+        isValid = false;
+      }
     }
 
     if (!input.password.trim()) {
@@ -38,11 +43,6 @@ function SignUp() {
       isValid = false;
     }
 
-    if (!agreeTerms) {
-      errors.terms = 'Please agree to the Terms of Service';
-      isValid = false;
-    }
-
     setErrors(errors);
     return isValid;
   };
@@ -50,7 +50,9 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      localStorage.setItem('user', JSON.stringify({ name: input.name, email: input.email , password:input.password }));
+      const newUser = { id: Date.now(), name: input.name, email: input.email , password:input.password };
+      const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+      localStorage.setItem('users', JSON.stringify([...existingUsers, newUser]));
       navigate('/SignIn');
     }
   };
@@ -97,16 +99,6 @@ function SignUp() {
                 onChange={(e) => setInput({ ...input, password: e.target.value })}
               />
               {errors.password && <p className="text-danger">{errors.password}</p>}
-            </Form.Group>
-            <Form.Group className='mb-4'>
-              <Form.Check
-                type='checkbox'
-                id='flexCheckDefault'
-                label='I agree to all statements in Terms of service'
-                checked={agreeTerms}
-                onChange={(e) => setAgreeTerms(e.target.checked)}
-              />
-              {errors.terms && <p className="text-danger">{errors.terms}</p>}
             </Form.Group>
             <Button type='submit' className='mb-4 w-100 gradient-custom-4' size='lg'>Register</Button>
             <p className="text-center mb-0">Already have an account? <a href="./SignIn">Sign In</a></p>

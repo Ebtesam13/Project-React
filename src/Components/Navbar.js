@@ -1,9 +1,11 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
-const NavbarComponent = () => {
+
+const NavbarComponent = (props) => {
 
 
 const LoggedIn = JSON.parse(localStorage.getItem('LoggedIn'));
@@ -11,6 +13,8 @@ console.log(LoggedIn);
 
   const handleLogout = () => {
     localStorage.removeItem('LoggedIn'); 
+    localStorage.removeItem('UserId'); 
+
     Link('/SignIn'); 
   };
   
@@ -22,9 +26,18 @@ console.log(LoggedIn);
             <Navbar.Toggle aria-controls="basic-navbar-nav"className="text-center"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
+
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/Cart">Cart</Nav.Link>
                     <Nav.Link href="/Favorite">Favorite</Nav.Link>
+                    <Nav.Link href="/Cart" className='text-end'>
+                        <div className="d-flex flex-column align-items-center">
+                            <span>{props.size}</span>
+                            <span>
+                                <i className='fas fa-cart-plus' style={{ color: 'white', fontSize: '24px' }}></i>
+                            </span>
+                        </div>
+                    </Nav.Link>
+                    
                     {LoggedIn && <Nav.Link onClick={handleLogout} href='/SignIn'>Log out</Nav.Link>}
 
                 </Nav>

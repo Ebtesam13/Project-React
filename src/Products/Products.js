@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Pagination, Dropdown, ButtonGroup, Form, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Card, Pagination, Dropdown, ButtonGroup, Form, InputGroup  } from 'react-bootstrap';
+import {useNavigate}  from 'react-router-dom';
+import ProductDetailsPage from './DetailsProduct';
 
 import './Products.css';
 
@@ -10,6 +12,7 @@ function Products() {
   const [search, setSearch] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
   const [selectedCategories, setSelectedCategories] = useState([]);
+
 
   useEffect(() => {
     fetchProducts();
@@ -25,7 +28,6 @@ function Products() {
     }
   };
 
-  // Filtered and sorted products
   const filteredProducts = products.filter((product) =>
     product.title.toLowerCase().includes(search.toLowerCase()) &&
     (selectedCategories.length === 0 || selectedCategories.includes(product.category))
@@ -55,6 +57,54 @@ function Products() {
       : [...selectedCategories, category];
     setSelectedCategories(updatedCategories);
   };
+
+  const LoggedIn = JSON.parse(localStorage.getItem('LoggedIn'));
+  console.log(LoggedIn);
+
+  const UserId = JSON.parse(localStorage.getItem('LoggedIn'));
+  console.log(UserId);
+
+  const navigate = useNavigate(); 
+  const handleAddToCart = (product) => {
+    if (LoggedIn) {
+      const userId = JSON.parse(localStorage.getItem('UserId'));
+      let orders = JSON.parse(localStorage.getItem('Orders')) || [];
+
+      const existingOrderIndex = orders.findIndex((order) => order.userId === userId && !order.completed);
+
+      if (existingOrderIndex !== -1) {
+        const existingProductIndex = orders[existingOrderIndex].products.findIndex((p) => p.id === product.id);
+        if (existingProductIndex !== -1) {
+          orders[existingOrderIndex].products[existingProductIndex].quantity += 1;
+        } else {
+          orders[existingOrderIndex].products.push({ ...product, quantity: 1 });
+        }
+      } else {
+        orders.push({ userId: userId, products: [{ ...product, quantity: 1 }], completed: false });
+      }
+
+      localStorage.setItem('Orders', JSON.stringify(orders));
+      setTimeout(() => {
+        alert('Done added Product to your Order');
+        window.close();
+      }, 2000);
+     } else {
+      navigate('/SignIn');
+    }
+  };
+
+
+
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const handleViewDetails = (product) => {
+    setSelectedProduct(product);
+  };
+
+  if (selectedProduct) {
+    return <ProductDetailsPage product={selectedProduct} />;
+  }
+  
 
   return (
     <Container>
@@ -105,7 +155,11 @@ function Products() {
                   />
                   <Card.Body>
                     <Card.Title className="title-product mt-1">{product.title}</Card.Title>
-                    <h4 className="title-product mt-1"  style={{ color: 'red'}}>{product.category}</h4>
+                    <h4 className="title-category mt-1"  style={{ color: 'red'}}>{product.category}</h4>
+                    <button className="btn btn-warning" onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                    <button className="btn btn-info m-1" onClick={() => handleViewDetails(product)}>
+                      View Details
+                    </button>
                     <hr style={{ color: 'green', borderWidth: '5px' }} />
                     <div className="rating-container">
                       <div className="rating-left">
@@ -142,3 +196,5 @@ function Products() {
 }
 
 export default Products;
+
+
