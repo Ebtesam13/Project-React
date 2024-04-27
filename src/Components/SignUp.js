@@ -53,7 +53,9 @@ function SignUp() {
       const newUser = { id: Date.now(), name: input.name, email: input.email , password:input.password };
       const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
       localStorage.setItem('users', JSON.stringify([...existingUsers, newUser]));
-      navigate('/SignIn');
+      localStorage.setItem('LoggedIn', JSON.stringify(true));
+      localStorage.setItem('UserId', JSON.stringify(newUser.id))
+      navigate('/');
     }
   };
 

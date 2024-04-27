@@ -24,7 +24,6 @@
   justify-content: space-between;
   align-items: center;
 }
-
 .rating-left {
   display: flex;
   align-items: center;
@@ -111,6 +110,16 @@
   width: 200px;
   height: 400px;
 }
+
+.heart-icon,
+.heart-icon-filled {
+  cursor: pointer;
+  font-size: 24px;
+  transition: color 0.3s ease;
+  color: red;
+}
+
+
 
 
 

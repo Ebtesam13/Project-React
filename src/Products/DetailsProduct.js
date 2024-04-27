@@ -29,7 +29,8 @@ const DetailsProduct = ({ product }) => {
       }
 
       localStorage.setItem('Orders', JSON.stringify(orders));
-      console.log('Orders saved:', orders);
+      // console.log('Orders saved:', orders);
+      alert("Done added Product to your Order");
     } else {
       navigate('/SignIn');
     }

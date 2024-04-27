@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Pagination, Dropdown, ButtonGroup, Form, InputGroup  } from 'react-bootstrap';
-import {useNavigate}  from 'react-router-dom';
+import { Container, Row, Col, Card, Pagination, Dropdown, ButtonGroup, Form, InputGroup } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import ProductDetailsPage from './DetailsProduct';
-
 import './Products.css';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { addToFavorites, removeFromFavorites, setUserId } from '../Redux/favoriteSlice';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -13,10 +16,21 @@ function Products() {
   const [sortOrder, setSortOrder] = useState('asc');
   const [selectedCategories, setSelectedCategories] = useState([]);
 
+  const favoriteProducts = useSelector((state) => state.favorite.favorites);
+  // const userId = useSelector((state) => state.favorite.userId);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
-  }, [currentPage, sortOrder]);
+  }, [currentPage, sortOrder, dispatch]);
+
+  useEffect(() => {
+    const storedUserId = JSON.parse(localStorage.getItem('UserId'));
+    if (storedUserId) {
+      dispatch(setUserId(storedUserId));
+    }
+  }, [dispatch]);
 
   const fetchProducts = async () => {
     try {
@@ -28,10 +42,12 @@ function Products() {
     }
   };
 
-  const filteredProducts = products.filter((product) =>
-    product.title.toLowerCase().includes(search.toLowerCase()) &&
-    (selectedCategories.length === 0 || selectedCategories.includes(product.category))
+  const filteredProducts = products.filter(
+    (product) =>
+      product.title.toLowerCase().includes(search.toLowerCase()) &&
+      (selectedCategories.length === 0 || selectedCategories.includes(product.category))
   );
+
   const sortedProducts = filteredProducts.slice().sort((a, b) => {
     if (sortOrder === 'asc') {
       return a.price - b.price;
@@ -39,6 +55,7 @@ function Products() {
       return b.price - a.price;
     }
   });
+
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
@@ -59,12 +76,7 @@ function Products() {
   };
 
   const LoggedIn = JSON.parse(localStorage.getItem('LoggedIn'));
-  console.log(LoggedIn);
 
-  const UserId = JSON.parse(localStorage.getItem('LoggedIn'));
-  console.log(UserId);
-
-  const navigate = useNavigate(); 
   const handleAddToCart = (product) => {
     if (LoggedIn) {
       const userId = JSON.parse(localStorage.getItem('UserId'));
@@ -84,27 +96,33 @@ function Products() {
       }
 
       localStorage.setItem('Orders', JSON.stringify(orders));
-      setTimeout(() => {
-        alert('Done added Product to your Order');
-        window.close();
-      }, 2000);
-     } else {
+      alert('Done added Product to your Order');
+    } else {
       navigate('/SignIn');
     }
   };
 
-
-
-
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const handleViewDetails = (product) => {
     setSelectedProduct(product);
   };
 
+  const handleToggleFavorite = (product) => {
+    const isFavorite = Array.isArray(favoriteProducts) && favoriteProducts.some((favProduct) => favProduct && favProduct.id === product.id);
+
+    if (isFavorite) {
+      dispatch(removeFromFavorites(product.id));
+      console.log('Removed from favorites:', product);
+    } else {
+      dispatch(addToFavorites(product));
+      console.log('Added to favorites:', product);
+    }
+  };
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
   if (selectedProduct) {
     return <ProductDetailsPage product={selectedProduct} />;
   }
-  
 
   return (
     <Container>
@@ -118,13 +136,13 @@ function Products() {
               />
             </InputGroup>
             <Dropdown as={ButtonGroup} className="m-3">
-                <Dropdown.Toggle variant="secondary" id="sort-dropdown">
-                  Sort by Price
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => handleSortOrderChange('asc')}>Lowest to Highest</Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleSortOrderChange('desc')}>Highest to Lowest</Dropdown.Item>
-                </Dropdown.Menu>
+              <Dropdown.Toggle variant="secondary" id="sort-dropdown">
+                Sort by Price
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => handleSortOrderChange('asc')}>Lowest to Highest</Dropdown.Item>
+                <Dropdown.Item onClick={() => handleSortOrderChange('desc')}>Highest to Lowest</Dropdown.Item>
+              </Dropdown.Menu>
             </Dropdown>
             <div className="m-3">
               <h5>Filter by Category:</h5>
@@ -155,8 +173,12 @@ function Products() {
                   />
                   <Card.Body>
                     <Card.Title className="title-product mt-1">{product.title}</Card.Title>
-                    <h4 className="title-category mt-1"  style={{ color: 'red'}}>{product.category}</h4>
-                    <button className="btn btn-warning" onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                    <h4 className="title-category mt-1" style={{ color: 'red' }}>
+                      {product.category}
+                    </h4>
+                    <button className="btn btn-warning" onClick={() => handleAddToCart(product)}>
+                      Add to Cart
+                    </button>
                     <button className="btn btn-info m-1" onClick={() => handleViewDetails(product)}>
                       View Details
                     </button>
@@ -171,6 +193,15 @@ function Products() {
                         <span className="price">${product.price}</span>
                       </div>
                     </div>
+                    {/* Heart icon for favorites */}
+                    {Array.isArray(favoriteProducts) && favoriteProducts.some((favProduct) => favProduct && favProduct.id === product.id) ? (
+                      <BsHeartFill
+                        onClick={() => handleToggleFavorite(product)}
+                        className="heart-icon-filled"
+                      />
+                    ) : (
+                      <BsHeart onClick={() => handleToggleFavorite(product)} className="heart-icon" />
+                    )}
                   </Card.Body>
                 </Card>
               </Col>
@@ -196,5 +227,3 @@ function Products() {
 }
 
 export default Products;
-
-

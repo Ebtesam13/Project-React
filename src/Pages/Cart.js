@@ -79,7 +79,7 @@ const Cart = ({ isLoggedIn }) => {
       <div className="mb-4">Total Orders: {userOrders.length}</div>
       {userOrders.map((order, orderIndex) => (
         <div key={orderIndex} className="mb-4">
-          <h2>Order ID: {order.userId}</h2>
+          {/* <h2>Order ID: {order.userId}</h2> */}
           <Table striped bordered hover className="cart-table">
             <thead>
               <tr>
@@ -95,7 +95,7 @@ const Cart = ({ isLoggedIn }) => {
             <tbody>
               {order.products.map((product, productIndex) => (
                 <tr key={`${orderIndex}-${productIndex}`}>
-                  <td>{product.id}</td>
+                  <td>{productIndex+1}</td>
                   <td>{product.title}</td>
                   <td>
                     <Image src={product.image} alt={product.title} className="cart-image" width={70} height={60} />
@@ -103,11 +103,11 @@ const Cart = ({ isLoggedIn }) => {
                   <td>{product.quantity}</td>
                   <td>{product.price}</td>
                   <td>
-                    <Button variant="danger" className="mt-0" onClick={() => handleQuantityChange(order.userId, product.id, 'decrement')}>
+                    <Button variant="danger" className="mt-1" onClick={() => handleQuantityChange(order.userId, product.id, 'decrement')}>
                       -
                     </Button>
                     <span style={{ fontSize: '25px', margin: "0 10px" }}>|</span>
-                    <Button variant="success" className="mt-0" onClick={() => handleQuantityChange(order.userId, product.id, 'increment')}>
+                    <Button variant="success" className="mt-1" onClick={() => handleQuantityChange(order.userId, product.id, 'increment')}>
                       +
                     </Button>
                   </td>
@@ -130,6 +130,9 @@ const Cart = ({ isLoggedIn }) => {
       ))}
       <div className="text-end mb-3">
         <strong>Total Bill: ${calculateBill()}</strong>
+        {/* parseFloat(billAmount.toFixed(2)); */}
+        <p>Total Bill after taxes: ${(calculateBill() * 0.14 + calculateBill()).toFixed(2)}</p>
+
       </div>
     </div>
   );

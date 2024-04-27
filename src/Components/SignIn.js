@@ -44,19 +44,19 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const userEmail = input.email.trim().toLowerCase(); // Ensure lowercase and no spaces
-      const userPassword = input.password.trim(); // Ensure no spaces
+      const userEmail = input.email.trim().toLowerCase(); 
+      const userPassword = input.password.trim(); 
       console.log('User email:', userEmail);
       console.log('User password:', userPassword);
   
-      const usersData = JSON.parse(localStorage.getItem('users')) || []; // Parse the array of objects
-      console.log('Stored users data:', usersData);
+      const usersData = JSON.parse(localStorage.getItem('users')) || []; 
+      // console.log('Stored users data:', usersData);
   
       const foundUser = usersData.find((user) => user.email === userEmail && user.password === userPassword);
-      console.log('Found user:', foundUser);
+      // console.log('Found user:', foundUser);
   
       if (foundUser) {
-        handleLogin(foundUser); // Pass the foundUser object to handleLogin function
+        handleLogin(foundUser); 
       } else {
         navigate('/SignIn');
         alert('Invalid email or password');
