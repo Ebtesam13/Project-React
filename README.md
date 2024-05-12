@@ -1,70 +1,23 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![Screenshot (483)](https://github.com/Ebtesam13/Project-React/assets/88440640/b5de9405-eca9-4b82-9bc2-ecc667d5d641)
+![Screenshot (484)](https://github.com/Ebtesam13/Project-React/assets/88440640/791b27ee-ab62-41b0-b4fa-9585a0af437b)
+![Screenshot (485)](https://github.com/Ebtesam13/Project-React/assets/88440640/fac8366f-954f-495f-b9d4-9a57658b6c71)
+![Screenshot (486)](https://github.com/Ebtesam13/Project-React/assets/88440640/211227b4-0758-43b1-9184-e19196c7ef22)
+![Screenshot (487)](https://github.com/Ebtesam13/Project-React/assets/88440640/3d03298f-e4a8-4f6b-a81b-c029ea974f63)
+![Screenshot (488)](https://github.com/Ebtesam13/Project-React/assets/88440640/945bc111-f2e2-4682-b061-cf3e6591ba8b)
+![Screenshot (489)](https://github.com/Ebtesam13/Project-React/assets/88440640/14eb63f4-7b08-45e2-86c0-c17d290bc3ef)
+![Screenshot (490)](https://github.com/Ebtesam13/Project-React/assets/88440640/890ca9f9-402e-4c5f-a5b1-0b7489984396)
+![Screenshot (491)](https://github.com/Ebtesam13/Project-React/assets/88440640/809adbfc-ab62-47a1-a22a-740e4171bd9f)
+![Screenshot (492)](https://github.com/Ebtesam13/Project-React/assets/88440640/b2b45402-01da-440b-9a53-97dce70312e0)
+![Screenshot (493)](https://github.com/Ebtesam13/Project-React/assets/88440640/5e3e2b31-d0e2-4759-80a0-5ac7699aa003)
+![Screenshot (494)](https://github.com/Ebtesam13/Project-React/assets/88440640/d2003153-b0e6-4ed2-9048-372e6b87c108)
+![Screenshot (495)](https://github.com/Ebtesam13/Project-React/assets/88440640/1564a0aa-b8c0-4560-89ec-17cdfc6b734d)
+![Screenshot (496)](https://github.com/Ebtesam13/Project-React/assets/88440640/d9ce62a4-8fe5-4b8c-9678-06b2c1a797ca)
+![Screenshot (497)](https://github.com/Ebtesam13/Project-React/assets/88440640/cfe2b48a-948b-4450-a139-f6449a67efb6)
+![Screenshot (498)](https://github.com/Ebtesam13/Project-React/assets/88440640/19b9f418-cb59-45b2-91c4-1783f34023c0)
+![Screenshot (499)](https://github.com/Ebtesam13/Project-React/assets/88440640/68edc470-afdf-494b-b14b-ee2e5faa3fe1)
+![Screenshot (500)](https://github.com/Ebtesam13/Project-React/assets/88440640/5a63c1bd-409c-429a-9a19-358aeb00fd93)
+![Screenshot (501)](https://github.com/Ebtesam13/Project-React/assets/88440640/b75a85c4-f6a3-4e3d-b779-6be95a73df48)
+![Screenshot (502)](https://github.com/Ebtesam13/Project-React/assets/88440640/46b994bc-c3d5-40a4-bdfe-09ed058eb0d1)
+![Screenshot (503)](https://github.com/Ebtesam13/Project-React/assets/88440640/c0d2a563-d799-4830-8818-3ab0fb94a178)
+![Screenshot (504)](https://github.com/Ebtesam13/Project-React/assets/88440640/c90c99b6-4509-4e5d-912d-920a8b4385e3)
+![Screenshot (505)](https://github.com/Ebtesam13/Project-React/assets/88440640/9c2535c3-9c95-470f-a9f5-702767b4614e)
